@@ -1,0 +1,14 @@
+.product-details {
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2rem;
+
+    img {
+      width: 15rem;
+      height: 15rem;
+      border-radius: 0.25rem;
+    }
+  }
+}
