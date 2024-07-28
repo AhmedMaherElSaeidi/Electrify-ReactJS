@@ -1,7 +1,7 @@
 import axios from "axios";
 import SERVER_DOMAIN from "./enviroment";
 
-const API = (api) => `${SERVER_DOMAIN}/api/products/${api}`;
+const API = (api) => `${SERVER_DOMAIN}/api/products${api || ""}`;
 
 export const fetchAllProducts = async () => {
   return await axios.get(API());

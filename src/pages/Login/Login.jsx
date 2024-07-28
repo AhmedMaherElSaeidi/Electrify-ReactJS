@@ -1,13 +1,18 @@
 import "./Login.scss";
-import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
 import CurrentUser from "../../models/CurrentUser";
 import { login } from "../../services/authentication";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import FormInput1 from "../../components/Form/FormInput1/FormInput1";
 
 const Login = () => {
+  const [passwordV, setPasswordV] = useState(false);
   const navigate = useNavigate();
+  const user = new CurrentUser();
   const {
     register,
     handleSubmit,
@@ -17,9 +22,11 @@ const Login = () => {
   const onSubmit = (data) => {
     login(data)
       .then((res) => {
+        // saving user credentials
         const user = new CurrentUser();
         user.authenticate(res.data.data);
-        console.log(user.sessionValid());
+
+        // Go to home if authorized
         if (user.sessionValid()) {
           navigate("/home");
           return;
@@ -30,30 +37,33 @@ const Login = () => {
       });
   };
 
+  useEffect(() => {
+    if (user.sessionValid()) {
+      navigate("/home");
+    }
+  }, []);
+
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <input
-          type="text"
-          id="username"
-          placeholder="Username"
-          {...register("username", { required: true })}
-          className={errors.username ? "invalid-input" : ""}
-        />
-      </div>
-      <div>
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          {...register("password", { required: true })}
-          className={errors.password ? "invalid-input" : ""}
-        />
-      </div>
+      <FormInput1
+        type="text"
+        id="username"
+        label="Username"
+        errors={errors}
+        register={register}
+      />
+      <FormInput1
+        type={passwordV ? "text" : "password"}
+        id="password"
+        label="********"
+        errors={errors}
+        register={register}
+        handleClickEvent={() => setPasswordV(!passwordV)}
+      >
+        {passwordV ? <FaEyeSlash /> : <FaEye />}
+      </FormInput1>
       <button className="d-block">Login</button>
-      <Link to="/register" className="m-auto">
-        Register
-      </Link>
+      <Link to="/register">Register</Link>
     </form>
   );
 };

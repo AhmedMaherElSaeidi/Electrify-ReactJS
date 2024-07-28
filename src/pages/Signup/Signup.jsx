@@ -1,86 +1,114 @@
-import React from "react";
+import "./Signup.scss";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
+import { saveUser } from "../../services/users";
+import CurrentUser from "../../models/CurrentUser";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import FormInput2 from "../../components/Form/FormInput2/FormInput2";
+import FormRadio2 from "../../components/Form/FormRadio2/FormRadio2";
 
 const Signup = () => {
+  const [passwordV, setPasswordV] = useState(false);
+  const navigate = useNavigate();
+  const user = new CurrentUser();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    // Authenticating user
+    saveUser(data)
+      .then((res) => {
+        if (res.data.data) {
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.error("Error registerring user:", err);
+      });
+  };
+
+  useEffect(() => {
+    if (user.sessionValid()) {
+      navigate("/home");
+    }
+  }, []);
+
   return (
-    <div class="signup">
-      <div class="container">
-        <div class="signup-content">
-          <form method="POST" id="signup-form" class="signup-form">
-            <h2 class="form-title">Create account</h2>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-input"
-                name="name"
-                id="name"
-                placeholder="Your Name"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="email"
-                class="form-input"
-                name="email"
-                id="email"
-                placeholder="Your Email"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-input"
-                name="password"
-                id="password"
-                placeholder="Password"
-              />
-              <span
-                toggle="#password"
-                class="zmdi zmdi-eye field-icon toggle-password"
-              ></span>
-            </div>
-            <div class="form-group">
-              <input
-                type="password"
-                class="form-input"
-                name="re_password"
-                id="re_password"
-                placeholder="Repeat your password"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="checkbox"
-                name="agree-term"
-                id="agree-term"
-                class="agree-term"
-              />
-              <label for="agree-term" class="label-agree-term">
-                <span>
-                  <span></span>
-                </span>
-                I agree all statements in
-                <a href="#" class="term-service">
-                  Terms of service
-                </a>
-              </label>
-            </div>
-            <div class="form-group">
-              <input
-                type="submit"
-                name="submit"
-                id="submit"
-                class="form-submit"
-                value="Sign up"
-              />
-            </div>
-          </form>
-          <p class="loginhere">
-            Have already an account ?
-            <a href="#" class="loginhere-link">
-              Login here
-            </a>
-          </p>
-        </div>
+    <div className="signup">
+      <div className="title">Registration</div>
+      <div className="content">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="user-details">
+            <FormInput2
+              id="fname"
+              type="text"
+              label="First Name"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="lname"
+              type="text"
+              label="Last Name"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="username"
+              type="text"
+              label="Username"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="password"
+              type={passwordV ? "text" : "password"}
+              label="Password"
+              register={register}
+              errors={errors}
+              handleClickEvent={() => setPasswordV(!passwordV)}
+            >
+              {passwordV ? <FaEyeSlash /> : <FaEye />}
+            </FormInput2>
+            <FormInput2
+              id="telephone"
+              type="number"
+              label="Telephone"
+              register={register}
+              errors={errors}
+              validation={{
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Telephone must be a number",
+                },
+              }}
+            />
+          </div>
+          <div>
+            <FormRadio2
+              id="gender"
+              type="radio"
+              label="Gender"
+              values={["M", "F"]}
+              labels={["Male", "Female"]}
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <div className="button mb-1">
+            <input type="submit" />
+          </div>
+          <Link to="/login" className="m-auto">
+            Login
+          </Link>
+        </form>
       </div>
     </div>
   );

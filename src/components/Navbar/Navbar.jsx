@@ -110,7 +110,7 @@ const Navbar = () => {
                 <SiCodeblocks /> products
               </NavDropdown>
             </li>
-            {!user.isAdmin() && (
+            {!user.isAdmin() && user.sessionValid() && (
               <li className="nav-item">
                 <Link
                   className={
