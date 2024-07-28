@@ -1,0 +1,43 @@
+.form-input-2 {
+  position: relative;
+
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+  > .react-ico {
+    position: absolute;
+    top: 2.35rem;
+    right: 1rem;
+    opacity: 0.5;
+  }
+  > .react-ico:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  span.details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+  }
+  input:focus,
+  input:valid {
+    border-color: #2c5f2d;
+  }
+}
+
+@media (max-width: 584px) {
+  .form-input-2 {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+}

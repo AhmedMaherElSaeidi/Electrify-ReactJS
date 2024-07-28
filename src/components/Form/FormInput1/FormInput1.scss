@@ -1,0 +1,13 @@
+.form-input-1 {
+  position: relative;
+  > .react-ico {
+    position: absolute;
+    top: 0.5rem;
+    right: 1.25rem;
+    opacity: 0.5;
+  }
+  > .react-ico:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
