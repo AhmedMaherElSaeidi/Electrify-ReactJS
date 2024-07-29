@@ -1,10 +1,10 @@
 import "./ProductDetail.scss";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
 import { fetchProduct } from "../../../services/products";
 import RequestProduct from "../RequestProduct/RequestProduct";
-import CurrentUser from "../../../models/CurrentUser";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -47,7 +47,7 @@ const ProductDetail = () => {
             />
           </div>
           <div>
-            <h4>{pageData.product.name}</h4>
+            <h4 className="fw-bold">{pageData.product.name}</h4>
             <ul className="list-group">
               <li className="list-group-item">
                 <strong>Price: </strong>${pageData.product.price}

@@ -1,0 +1,36 @@
+$border-color: #2c5f2d;
+
+.cart-component {
+  border-top: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  border-top-left-radius: 0.25rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  > .cart-component-header {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $border-color;
+    .status-yellow,
+    .status-green,
+    .status-red {
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+    }
+    .status-yellow {
+      color: yellow;
+      background-color: #525207;
+    }
+    .status-green {
+      color: greenyellow;
+      background-color: #3b5711;
+    }
+    .status-red {
+      color: red;
+      background-color: #520e0e;
+    }
+  }
+  > .cart-component-footer {
+    padding-top: 0.5rem;
+    border-top: 1px solid $border-color;
+  }
+}

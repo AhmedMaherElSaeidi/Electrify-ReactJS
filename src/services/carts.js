@@ -6,15 +6,27 @@ const user = new CurrentUser();
 const API = (api) => `${SERVER_DOMAIN}/api/carts${api || ""}`;
 
 export const fetchAllCarts = async () => {
-  return await axios.get(API());
+  return await axios.get(API(), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
 
 export const fetchUserCarts = async (id) => {
-  return await axios.get(API(`/user_carts/${id}`));
+  return await axios.get(API(`/user_carts/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
 
 export const fetchCart = async (id) => {
-  return await axios.get(API(`/${id}`));
+  return await axios.get(API(`/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
 
 export const saveCart = async (cart) => {
@@ -30,10 +42,15 @@ export const updateCart = async (id, cart) => {
   return await axios.put(API(`/${id}`), cart, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      "x-auth-token": user.getToken(),
     },
   });
 };
 
 export const deleteCart = async (id) => {
-  return await axios.delete(API(`/${id}`));
+  return await axios.delete(API(`/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };

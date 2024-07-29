@@ -1,3 +1,4 @@
+import "./Layout.scss";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
@@ -5,9 +6,9 @@ import Footer from "../components/Footer/Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="layout">
       <Navbar />
-      <div className="p-1">
+      <div className="layout-body p-1">
         <Outlet />
       </div>
       <Footer />
