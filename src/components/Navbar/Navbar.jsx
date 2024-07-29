@@ -21,15 +21,14 @@ const Navbar = () => {
   useEffect(() => {
     fetchAllCategories()
       .then((res) => {
-        setNavbarData({
-          ...navbarData,
-          categories: res.data.data,
-          loadig: false,
+        setNavbarData((prev) => {
+          return { ...prev, categories: res.data.data, loadig: false };
         });
-        // console.log(res.data.data);
       })
       .catch((err) => {
-        setNavbarData({ ...navbarData, err, loadig: false });
+        setNavbarData((prev) => {
+          return { ...prev, err, loadig: false };
+        });
         console.error("Error fetching categories:", err);
       });
   }, []);

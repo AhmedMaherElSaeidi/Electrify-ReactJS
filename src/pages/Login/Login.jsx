@@ -41,7 +41,7 @@ const Login = () => {
     if (user.sessionValid()) {
       navigate("/home");
     }
-  }, []);
+  });
 
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>

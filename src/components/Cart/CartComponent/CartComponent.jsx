@@ -51,7 +51,7 @@ const CartComponent = ({ cart, onClickEvent }) => {
         <p className="mb-1">
           <span className="fw-bold">{date}</span> at {time}
         </p>
-        <a href={cart.location} target="_blank" className="fs-5">
+        <a className="fs-5" href={cart.location} target="_blank" rel="noreferrer">
           <FaMapLocationDot />
         </a>
       </div>

@@ -12,29 +12,28 @@ const ProductDetail = () => {
   const [pageData, setPageData] = useState({
     product: [],
     err: null,
-    loadig: true,
+    loading: true,
   });
 
-  useEffect(() => {
+  const fetchProductData = () => {
     fetchProduct(id)
       .then((res) => {
-        setPageData({ ...pageData, product: res.data.data, loadig: false });
-        // console.log(res.data.data);
-        setPageData((prevState) => ({
-          ...prevState,
-          product: res.data.data,
-          loadig: false,
-        }));
+        setPageData({ ...pageData, product: res.data.data, loading: false });
+        setPageData((prev) => {
+          return { ...prev, product: res.data.data, loading: false };
+        });
       })
       .catch((err) => {
-        setPageData((prevState) => ({
-          ...prevState,
-          err,
-          loadig: false,
-        }));
+        setPageData((prev) => {
+          return { ...prev, err, loading: false };
+        });
         console.error("Error fetching product:", err);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchProductData();
+  });
 
   return (
     <div className="product-details">
@@ -50,7 +49,7 @@ const ProductDetail = () => {
             <h4 className="fw-bold">{pageData.product.name}</h4>
             <ul className="list-group">
               <li className="list-group-item">
-                <strong>Price: </strong>${pageData.product.price}
+                <strong>Price: </strong>EGP{pageData.product.price}
               </li>
               <li className="list-group-item">
                 <strong>Stock: </strong>

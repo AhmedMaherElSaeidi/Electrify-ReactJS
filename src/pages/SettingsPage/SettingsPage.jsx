@@ -82,7 +82,7 @@ const SettingsPage = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  });
 
   return (
     <div className="settings-page">

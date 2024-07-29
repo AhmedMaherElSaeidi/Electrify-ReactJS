@@ -1,4 +1,3 @@
-import qs from 'qs';
 import axios from "axios";
 import SERVER_DOMAIN from "./enviroment";
 

@@ -1,7 +1,7 @@
 import "./Signup.scss";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Link, redirect } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 import { saveUser } from "../../services/users";
@@ -38,7 +38,7 @@ const Signup = () => {
     if (user.sessionValid()) {
       navigate("/home");
     }
-  }, []);
+  });
 
   return (
     <div className="signup">

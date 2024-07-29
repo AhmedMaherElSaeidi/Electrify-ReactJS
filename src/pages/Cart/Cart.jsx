@@ -35,7 +35,7 @@ const Cart = () => {
     }
 
     fetchCartData();
-  }, []);
+  });
 
   const removeCart = async (id) => {
     setPageData({ ...pageData, loadig: true });

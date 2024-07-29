@@ -21,7 +21,7 @@ const Logout = () => {
     }
 
     logout();
-  }, []);
+  });
 
   return <div>Loggin out...</div>;
 };
