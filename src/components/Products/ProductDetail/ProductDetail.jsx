@@ -1,11 +1,14 @@
 import "./ProductDetail.scss";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { fetchProduct } from "../../../services/products";
 import SERVER_DOMAIN from "../../../services/enviroment";
+import { fetchProduct } from "../../../services/products";
+import RequestProduct from "../RequestProduct/RequestProduct";
+import CurrentUser from "../../../models/CurrentUser";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const user = new CurrentUser();
   const [pageData, setPageData] = useState({
     product: [],
     err: null,
@@ -36,7 +39,7 @@ const ProductDetail = () => {
   return (
     <div className="product-details">
       {pageData.product && (
-        <div className="details">
+        <div className="details mb-5">
           <div className="me-3 mb-3">
             <img
               src={`${SERVER_DOMAIN}/${pageData.product.image}`}
@@ -65,6 +68,9 @@ const ProductDetail = () => {
             </ul>
           </div>
         </div>
+      )}
+      {user.sessionValid() && !user.isAdmin() && (
+        <RequestProduct product={pageData.product} />
       )}
     </div>
   );
