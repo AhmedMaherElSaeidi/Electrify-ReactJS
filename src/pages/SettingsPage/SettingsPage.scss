@@ -1,0 +1,17 @@
+.settings-page {
+  > form {
+    padding: 3%;
+    > div:first-child {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 2rem;
+      > img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

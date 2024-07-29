@@ -8,6 +8,9 @@ $border-color: #2c5f2d;
   margin-top: 1rem;
   margin-left: 0.5rem;
   > .cart-component-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid $border-color;
     .status-yellow,
@@ -27,6 +30,13 @@ $border-color: #2c5f2d;
     .status-red {
       color: red;
       background-color: #520e0e;
+    }
+    > .delete-cart {
+      font-size: 1.2rem;
+    }
+    > .delete-cart:hover svg {
+      color: red;
+      cursor: pointer;
     }
   }
   > .cart-component-footer {

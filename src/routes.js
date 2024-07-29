@@ -6,6 +6,7 @@ import Signup from "./pages/Signup/Signup";
 import Logout from "./components/Logout/Logout";
 import Products from "./pages/Products/Products";
 import { createHashRouter } from "react-router-dom";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import ProductDetail from "./components/Products/ProductDetail/ProductDetail";
 
 const router = createHashRouter([
@@ -17,6 +18,7 @@ const router = createHashRouter([
       { path: "/cart", element: <Cart /> },
       { path: "/home", element: <Home /> },
       { path: "/products", element: <Products /> },
+      { path: "/settings", element: <SettingsPage /> },
       { path: "/products/:id", element: <Products /> },
       { path: "/product/:id", element: <ProductDetail /> },
     ],

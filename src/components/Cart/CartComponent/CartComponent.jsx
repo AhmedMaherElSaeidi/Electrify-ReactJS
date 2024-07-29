@@ -1,9 +1,10 @@
 import "./CartComponent.scss";
 import React from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import CartItemComponent from "../CartItemComponent/CartItemComponent";
 
-const CartComponent = ({ cart }) => {
+const CartComponent = ({ cart, onClickEvent }) => {
   const formatISODateTime = (isoString) => {
     const date = new Date(isoString);
 
@@ -30,10 +31,17 @@ const CartComponent = ({ cart }) => {
     canceled: "status-red",
   };
 
+  const deleteCart = () => {
+    onClickEvent(cart.id);
+  };
+
   return (
     <div className="cart-component">
       <div className="cart-component-header">
         <span className={statusClass[cart.status]}>{cart.status}</span>
+        <span className="delete-cart" onClick={deleteCart}>
+          <FaTrashAlt />
+        </span>
       </div>
       {cart.cart_items &&
         cart.cart_items.map((item, index) => {
