@@ -1,14 +1,16 @@
 import "./SettingsPage.scss";
 import { useForm } from "react-hook-form";
-import { fetchUser, saveUser, updateUser } from "../../services/users";
+import { useNavigate } from "react-router-dom";
 import CurrentUser from "../../models/CurrentUser";
 import React, { useEffect, useState } from "react";
 import SERVER_DOMAIN from "../../services/enviroment";
 import FormInput2 from "../../components/Form/FormInput2/FormInput2";
 import FormSelect2 from "../../components/Form/FormSelect2/FormSelect2";
+import { deleteUser, fetchUser, updateUser } from "../../services/users";
 
 const SettingsPage = () => {
   const user = new CurrentUser();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -40,6 +42,20 @@ const SettingsPage = () => {
         console.log(err);
       });
   };
+  const removeProfile = () => {
+    const confirm =
+      prompt("Are you sure to continue? Type 'yes' to continue...") === "yes";
+
+    if (confirm) {
+      deleteUser(user.toObject().id)
+        .then(() => {
+          navigate("/logout");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   const onSubmit = async (data) => {
     // Removing attributes unallowed to send them
     data.image = typeof data.image !== "string" ? data.image[0] : data.image;
@@ -55,9 +71,9 @@ const SettingsPage = () => {
     // Updating user
     updateUser(user.toObject().id, data)
       .then((res) => {
-        console.log(res.data);
         // Updating page state
         fetchUserData();
+        alert(res.data.message);
       })
       .catch((err) => {
         console.log(err);
@@ -71,14 +87,15 @@ const SettingsPage = () => {
   return (
     <div className="settings-page">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className="mb-3">
           <img
             src={`${SERVER_DOMAIN}/${pageData.user.image}`}
             alt="user_profile"
           />
+          <p className="text-center fs-4 fw-bold">{`${pageData.user.fname} ${pageData.user.lname}`}</p>
           <input type="file" {...register("image")} />
         </div>
-        <div>
+        <div className="mb-3">
           <FormInput2
             id="fname"
             type="text"
@@ -106,6 +123,12 @@ const SettingsPage = () => {
             label="Telephone"
             register={register}
             errors={errors}
+            validation={{
+              pattern: {
+                value: /^[0-9]{11}$/,
+                message: "Telephone must be a number",
+              },
+            }}
           />
           <FormSelect2
             id="gender"
@@ -117,6 +140,11 @@ const SettingsPage = () => {
           <button className="btn btn-secondary" type="submit">
             Save
           </button>
+        </div>
+        <div>
+          <span className="btn btn-danger" onClick={removeProfile}>
+            Delete Profile
+          </span>
         </div>
       </form>
     </div>

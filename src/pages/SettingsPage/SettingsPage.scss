@@ -1,6 +1,9 @@
 .settings-page {
   > form {
     padding: 3%;
+    .invalid-input {
+      outline: 2px solid red;
+    }
     > div:first-child {
       display: flex;
       align-items: center;
@@ -12,6 +15,13 @@
         border-radius: 50%;
         margin-bottom: 1rem;
       }
+    }
+    > div:nth-child(2),
+    > div:nth-child(3) {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
     }
   }
 }

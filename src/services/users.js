@@ -6,7 +6,11 @@ const user = new CurrentUser();
 const API = (api) => `${SERVER_DOMAIN}/api/users${api || ""}`;
 
 export const fetchAllUsers = async () => {
-  return await axios.get(API());
+  return await axios.get(API(), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
 
 export const fetchUser = async (id) => {
@@ -35,5 +39,9 @@ export const updateUser = async (id, userData) => {
 };
 
 export const deleteUser = async (id) => {
-  return await axios.delete(API(`/${id}`));
+  return await axios.delete(API(`/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
