@@ -2,12 +2,14 @@ import "./RequestProduct.scss";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { saveCart } from "../../../services/carts";
+import CurrentUser from "../../../models/CurrentUser";
 import CurrentCart from "../../../models/CurrentCart";
 import FormInput3 from "../../Form/FormInput3/FormInput3";
 import { saveCartItem } from "../../../services/cartItems";
 
 const RequestProduct = ({ product }) => {
   const cart = new CurrentCart();
+  const user = new CurrentUser();
   const {
     register,
     handleSubmit,
@@ -17,16 +19,15 @@ const RequestProduct = ({ product }) => {
 
   const onSubmit = async (data) => {
     try {
-      // Getting ids
+      // Getting cart id
       let cartID = cart.cartID;
-      const userID = cart.toObject().id;
 
       // Saving cart for current session
       if (!cartID) {
         const cartData = {};
         cartData.location = data.location;
         cartData.status = "pending";
-        cartData.user_id = userID;
+        cartData.user_id = user.id;
 
         await saveCart(cartData)
           .then((res) => {

@@ -1,29 +1,48 @@
 import "./ProductDetail.scss";
 import { FaTrashAlt } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
+import CurrentCart from "../../../models/CurrentCart";
 import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import RequestProduct from "../RequestProduct/RequestProduct";
+import { fetchSpecificCartItem } from "../../../services/cartItems";
 import { deleteProduct, fetchProduct } from "../../../services/products";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const user = new CurrentUser();
+  const cart = new CurrentCart();
   const navigate = useNavigate();
   const [pageData, setPageData] = useState({
     product: [],
     err: null,
+    inCart: false,
     loading: true,
   });
 
   const fetchProductData = async () => {
     await fetchProduct(id)
       .then((res) => {
+        const product = res.data.data;
         setPageData((prev) => {
-          return { ...prev, product: res.data.data, loading: false };
+          return { ...prev, product };
         });
+
+        if (cart.cartID) {
+          fetchSpecificCartItem(cart.cartID, product.id)
+            .then(() => {
+              setPageData((prev) => {
+                return { ...prev, inCart: true, loading: false };
+              });
+            })
+            .catch((err) => {
+              setPageData((prev) => {
+                return { ...prev, inCart: false, loading: false };
+              });
+            });
+        }
       })
       .catch((err) => {
         setPageData((prev) => {
@@ -48,8 +67,6 @@ const ProductDetail = () => {
 
   useEffect(() => {
     fetchProductData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -91,9 +108,10 @@ const ProductDetail = () => {
           </div>
         </div>
       )}
-      {user.sessionValid() && !user.isAdmin() && pageData.product && (
-        <RequestProduct product={pageData.product} />
-      )}
+      {user.sessionValid() &&
+        !user.isAdmin() &&
+        !pageData.inCart &&
+        pageData.product && <RequestProduct product={pageData.product} />}
       {user.isAdmin() && pageData.product && (
         <ProductUpdate handleEvent={fetchProductData} />
       )}

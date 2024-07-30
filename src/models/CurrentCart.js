@@ -1,9 +1,7 @@
-import CurrentUser from "./CurrentUser";
 import LocalStorage from "./LocalStorage";
 
-class CurrentCart extends CurrentUser {
+class CurrentCart {
   constructor() {
-    super();
     this.cart = new LocalStorage("cart");
   }
 
