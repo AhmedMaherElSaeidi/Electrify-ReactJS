@@ -13,7 +13,7 @@ const UserCard = ({ user, deleteUser }) => {
 
   return (
     <div className="user-card">
-      <img className="avatar" src={`${SERVER_DOMAIN}/${user.image}`} />
+      <img className="avatar" src={`${SERVER_DOMAIN}/${user.image}`} alt="user_profile"/>
       <h2 className="name">{fullname}</h2>
       <p className="location mb-1">{user.username}</p>
       <p className="location">{user.telephone}</p>
