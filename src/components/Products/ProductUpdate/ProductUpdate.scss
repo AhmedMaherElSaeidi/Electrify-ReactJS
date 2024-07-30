@@ -1,0 +1,13 @@
+$border-color: #2c5f2d;
+
+.product-update {
+  padding: 3%;
+  > form {
+    border: 2px solid $border-color;
+    border-radius: 0.25rem;
+    padding: 1%;
+    > div {
+      margin: 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.form-select-2 {
+.form-text-area-2 {
   position: relative;
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
@@ -10,7 +10,7 @@
     font-weight: 500;
     margin-bottom: 5px;
   }
-  select {
+  textarea {
     height: 45px;
     width: 100%;
     outline: none;
@@ -21,14 +21,14 @@
     border-bottom-width: 2px;
     transition: all 0.3s ease;
   }
-  select:focus,
-  select:valid {
+  textarea:focus,
+  textarea:valid {
     border-color: #2c5f2d;
   }
 }
 
 @media (max-width: 584px) {
-  .form-select-2 {
+  .form-text-area-2 {
     margin-bottom: 15px;
     width: 100%;
   }

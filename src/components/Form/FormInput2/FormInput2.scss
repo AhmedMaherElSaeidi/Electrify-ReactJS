@@ -1,8 +1,10 @@
 .form-input-2 {
   position: relative;
-
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
+  .invalid-input {
+    outline: 2px solid red;
+  }
   > .react-ico {
     position: absolute;
     top: 2.35rem;

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
 import { fetchProduct } from "../../../services/products";
+import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import RequestProduct from "../RequestProduct/RequestProduct";
 
 const ProductDetail = () => {
@@ -15,10 +16,9 @@ const ProductDetail = () => {
     loading: true,
   });
 
-  const fetchProductData = () => {
-    fetchProduct(id)
+  const fetchProductData = async () => {
+    await fetchProduct(id)
       .then((res) => {
-        setPageData({ ...pageData, product: res.data.data, loading: false });
         setPageData((prev) => {
           return { ...prev, product: res.data.data, loading: false };
         });
@@ -33,7 +33,9 @@ const ProductDetail = () => {
 
   useEffect(() => {
     fetchProductData();
-  });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="product-details">
@@ -68,9 +70,10 @@ const ProductDetail = () => {
           </div>
         </div>
       )}
-      {user.sessionValid() && !user.isAdmin() && (
+      {user.sessionValid() && !user.isAdmin() && pageData.product && (
         <RequestProduct product={pageData.product} />
       )}
+      {user.isAdmin() && pageData.product && <ProductUpdate handleEvent={fetchProductData} />}
     </div>
   );
 };

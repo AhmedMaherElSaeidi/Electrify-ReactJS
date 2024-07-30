@@ -25,12 +25,16 @@ export const saveProduct = async (productData) => {
 export const updateProduct = async (id, productData) => {
   return await axios.put(API(`/${id}`), productData, {
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "multipart/form-data",
       "x-auth-token": user.getToken(),
     },
   });
 };
 
 export const deleteProduct = async (id) => {
-  return await axios.delete(API(`/${id}`));
+  return await axios.delete(API(`/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };

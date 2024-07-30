@@ -1,32 +1,40 @@
 import axios from "axios";
 import SERVER_DOMAIN from "./enviroment";
+import CurrentUser from "../models/CurrentUser";
 
-const API = (api) => `${SERVER_DOMAIN}/api/${api}`;
+const user = new CurrentUser();
+const API = (api) => `${SERVER_DOMAIN}/api/categories${api || ""}`;
 
 export const fetchAllCategories = async () => {
-  return await axios.get(API(`categories`));
+  return await axios.get(API());
 };
 
 export const fetchCategory = async (id) => {
-  return await axios.get(API(`categories/${id}`));
+  return await axios.get(API(`/${id}`));
 };
 
 export const saveCategory = async (productData) => {
-  return await axios.post(`${API}/routes/post.php`, productData, {
+  return await axios.post(API(), productData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "x-auth-token": user.getToken(),
     },
   });
 };
 
 export const updateCategory = async (id, productData) => {
-  return await axios.put(API(`categories/${id}`), productData, {
+  return await axios.put(API(`/${id}`), productData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "x-auth-token": user.getToken(),
     },
   });
 };
 
 export const deleteCategory = async (id) => {
-  return await axios.delete(API(`categories/${id}`));
+  return await axios.delete(API(`/${id}`), {
+    headers: {
+      "x-auth-token": user.getToken(),
+    },
+  });
 };
