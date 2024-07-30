@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Spinner from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 import CurrentUser from "../../models/CurrentUser";
 import CurrentCart from "../../models/CurrentCart";
@@ -23,7 +24,7 @@ const Logout = () => {
     logout();
   });
 
-  return <div>Loggin out...</div>;
+  return <Spinner />;
 };
 
 export default Logout;
