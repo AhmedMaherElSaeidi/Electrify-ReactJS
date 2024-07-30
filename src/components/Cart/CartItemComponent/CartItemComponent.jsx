@@ -1,8 +1,11 @@
 import "./CartItemComponent.scss";
 import React from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
 
-const CartItemComponent = ({ item }) => {
+const CartItemComponent = ({ item, removeItem }) => {
+  const user = new CurrentUser();
   const quantity = item.quantity;
   const itemPrice = item.product_items.price;
   const totalPrice = itemPrice * quantity;
@@ -17,6 +20,11 @@ const CartItemComponent = ({ item }) => {
       <span className="d-block">Quantity: {quantity}</span>
       <span className="d-block">Price: ${itemPrice}</span>
       <span className="d-block">Total: ${totalPrice}</span>
+      {user.sessionValid() && !user.isAdmin() && (
+        <span className="d-block remove-btn" onClick={() => removeItem(item.id)}>
+          Remove: <FaTrashAlt />
+        </span>
+      )}
     </div>
   );
 };

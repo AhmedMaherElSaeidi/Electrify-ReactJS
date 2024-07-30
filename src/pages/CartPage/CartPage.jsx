@@ -54,7 +54,7 @@ const CartPage = () => {
       {pageData.carts &&
         pageData.carts.map((cart, index) => {
           return (
-            <CartComponent key={index} cart={cart} onClickEvent={removeCart} />
+            <CartComponent key={index} cart={cart} onClickEvent={removeCart} handleEvent={fetchCartData}/>
           );
         })}
     </div>

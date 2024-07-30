@@ -2,9 +2,10 @@ import "./CartComponent.scss";
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { deleteCartItem } from "../../../services/cartItems";
 import CartItemComponent from "../CartItemComponent/CartItemComponent";
 
-const CartComponent = ({ cart, onClickEvent }) => {
+const CartComponent = ({ cart, onClickEvent, handleEvent }) => {
   const formatISODateTime = (isoString) => {
     const date = new Date(isoString);
 
@@ -31,6 +32,13 @@ const CartComponent = ({ cart, onClickEvent }) => {
 
     return total;
   };
+  const removeItem = async (id) => {
+    await deleteCartItem(id)
+      .then(() => handleEvent())
+      .catch((err) => {
+        console.log("Error deleting cart item...", err);
+      });
+  };
   const deleteCart = () => {
     onClickEvent(cart.id);
   };
@@ -52,7 +60,13 @@ const CartComponent = ({ cart, onClickEvent }) => {
       </div>
       {cart.cart_items &&
         cart.cart_items.map((item, index) => {
-          return <CartItemComponent key={index} item={item} />;
+          return (
+            <CartItemComponent
+              key={index}
+              item={item}
+              removeItem={removeItem}
+            />
+          );
         })}
       <div className="cart-component-footer mt-3">
         <p className="mb-1">

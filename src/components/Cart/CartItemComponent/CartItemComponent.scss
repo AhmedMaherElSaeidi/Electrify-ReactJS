@@ -10,4 +10,8 @@ $bg-color: whitesmoke;
     height: 3rem;
     border-radius: 0.25rem;
   }
+  .remove-btn svg:hover {
+    color: red;
+    cursor: pointer;
+  }
 }
