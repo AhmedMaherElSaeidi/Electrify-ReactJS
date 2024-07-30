@@ -24,10 +24,17 @@ const CartComponent = ({ cart, onClickEvent }) => {
 
     return { date: formattedDate, time: formattedTime };
   };
+  const calculateTotal = () => {
+    const total = cart.cart_items.reduce((cumm, curr) => {
+      return cumm + curr.quantity * curr.product_items.price;
+    }, 0);
+
+    return total;
+  };
   const deleteCart = () => {
     onClickEvent(cart.id);
   };
-  
+
   const { date, time } = formatISODateTime(cart.createdAt);
   const statusClass = {
     pending: "status-yellow",
@@ -48,6 +55,10 @@ const CartComponent = ({ cart, onClickEvent }) => {
           return <CartItemComponent key={index} item={item} />;
         })}
       <div className="cart-component-footer mt-3">
+        <p className="mb-1">
+          <span className="fw-bold">Total: </span>
+          EGP{calculateTotal()}
+        </p>
         <p className="mb-1">
           <span className="fw-bold">{date}</span> at {time}
         </p>
