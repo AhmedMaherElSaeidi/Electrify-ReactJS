@@ -1,5 +1,6 @@
 import "./OrderPage.scss";
 import React, { useEffect, useState } from "react";
+import Spinner from "../../components/Spinner/Spinner";
 import { updateProduct } from "../../services/products";
 import { fetchAllCarts, updateCart } from "../../services/carts";
 import OrderComponent from "../../components/Order/OrderComponent/OrderComponent";
@@ -26,6 +27,7 @@ const OrderPage = () => {
       });
   };
   const updateCartData = async (cartData, productsData) => {
+    setPageData({ ...pageData, loading: true });
     const cartID = cartData.id;
     delete cartData.id;
 
@@ -53,6 +55,7 @@ const OrderPage = () => {
     }
 
     // Refreshing page
+    setPageData({ ...pageData, loading: false });
     fetchAllCartsData();
   };
 
@@ -72,6 +75,7 @@ const OrderPage = () => {
             />
           );
         })}
+      {pageData.loading && <Spinner />}
     </div>
   );
 };

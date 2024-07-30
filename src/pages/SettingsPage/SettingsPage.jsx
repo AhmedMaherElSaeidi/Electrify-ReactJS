@@ -7,6 +7,7 @@ import SERVER_DOMAIN from "../../services/enviroment";
 import FormInput2 from "../../components/Form/FormInput2/FormInput2";
 import FormSelect2 from "../../components/Form/FormSelect2/FormSelect2";
 import { deleteUser, fetchUser, updateUser } from "../../services/users";
+import Spinner from "../../components/Spinner/Spinner";
 
 const SettingsPage = () => {
   const user = new CurrentUser();
@@ -20,14 +21,15 @@ const SettingsPage = () => {
   const [pageData, setPageData] = useState({
     user: [],
     err: null,
-    loadig: true,
+    loading: true,
   });
 
-  const fetchUserData = () => {
-    fetchUser(user.toObject().id)
+  const fetchUserData = async () => {
+    setPageData({ ...pageData, loading: true });
+    await fetchUser(user.toObject().id)
       .then((res) => {
         setPageData((prev) => {
-          return { ...prev, user: res.data.data, loadig: false };
+          return { ...prev, user: res.data.data, loading: false };
         });
 
         const user = res.data.data;
@@ -37,27 +39,31 @@ const SettingsPage = () => {
       })
       .catch((err) => {
         setPageData((prev) => {
-          return { ...prev, err, loadig: false };
+          return { ...prev, err, loading: false };
         });
         console.log(err);
       });
   };
-  const removeProfile = () => {
+  const removeProfile = async () => {
     const confirm =
       prompt("Are you sure to continue? Type 'yes' to continue...") === "yes";
 
+    setPageData({ ...pageData, loading: true });
     if (confirm) {
-      deleteUser(user.toObject().id)
+      await deleteUser(user.toObject().id)
         .then(() => {
+          setPageData({ ...pageData, loading: false });
           navigate("/logout");
         })
         .catch((err) => {
+          setPageData({ ...pageData, loading: false });
           console.log(err);
         });
     }
   };
   const onSubmit = async (data) => {
     // Removing attributes unallowed to send them
+    setPageData({ ...pageData, loading: true });
     data.image = typeof data.image !== "string" ? data.image[0] : data.image;
     delete data.role;
     delete data.id;
@@ -69,13 +75,16 @@ const SettingsPage = () => {
     }
 
     // Updating user
-    updateUser(user.toObject().id, data)
+    await updateUser(user.toObject().id, data)
       .then((res) => {
         // Updating page state
         fetchUserData();
+
+        setPageData({ ...pageData, loading: false });
         alert(res.data.message);
       })
       .catch((err) => {
+        setPageData({ ...pageData, loading: false });
         console.log(err);
       });
   };
@@ -88,67 +97,70 @@ const SettingsPage = () => {
 
   return (
     <div className="settings-page">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-3">
-          <img
-            src={`${SERVER_DOMAIN}/${pageData.user.image}`}
-            alt="user_profile"
-          />
-          <p className="text-center fs-4 fw-bold">{`${pageData.user.fname} ${pageData.user.lname}`}</p>
-          <input type="file" {...register("image")} />
-        </div>
-        <div className="mb-3">
-          <FormInput2
-            id="fname"
-            type="text"
-            label="First Name"
-            register={register}
-            errors={errors}
-          />
-          <FormInput2
-            id="lname"
-            type="text"
-            label="Last Name"
-            register={register}
-            errors={errors}
-          />
-          <FormInput2
-            id="username"
-            type="text"
-            label="Username"
-            register={register}
-            errors={errors}
-          />
-          <FormInput2
-            id="telephone"
-            type="number"
-            label="Telephone"
-            register={register}
-            errors={errors}
-            validation={{
-              pattern: {
-                value: /^[0-9]{11}$/,
-                message: "Telephone must be a number",
-              },
-            }}
-          />
-          <FormSelect2
-            id="gender"
-            label="Gender"
-            values={["M", "F"]}
-            labels={["Male", "Female"]}
-            register={register}
-          />
-          <button className="btn btn-secondary" type="submit">
-            Save
-          </button>
-        </div>
-        <div>
-          <span className="btn btn-danger" onClick={removeProfile}>
-            Delete Profile
-          </span>
-        </div>
-      </form>
+      {!pageData.loading && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-3">
+            <img
+              src={`${SERVER_DOMAIN}/${pageData.user.image}`}
+              alt="user_profile"
+            />
+            <p className="text-center fs-4 fw-bold">{`${pageData.user.fname} ${pageData.user.lname}`}</p>
+            <input type="file" {...register("image")} />
+          </div>
+          <div className="mb-3">
+            <FormInput2
+              id="fname"
+              type="text"
+              label="First Name"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="lname"
+              type="text"
+              label="Last Name"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="username"
+              type="text"
+              label="Username"
+              register={register}
+              errors={errors}
+            />
+            <FormInput2
+              id="telephone"
+              type="number"
+              label="Telephone"
+              register={register}
+              errors={errors}
+              validation={{
+                pattern: {
+                  value: /^[0-9]{11}$/,
+                  message: "Telephone must be a number",
+                },
+              }}
+            />
+            <FormSelect2
+              id="gender"
+              label="Gender"
+              values={["M", "F"]}
+              labels={["Male", "Female"]}
+              register={register}
+            />
+            <button className="btn btn-secondary" type="submit">
+              Save
+            </button>
+          </div>
+          <div>
+            <span className="btn btn-danger" onClick={removeProfile}>
+              Delete Profile
+            </span>
+          </div>
+        </form>
+      )}
+      {pageData.loading && <Spinner />}
     </div>
   );
 };
