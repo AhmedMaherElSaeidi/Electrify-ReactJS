@@ -16,7 +16,7 @@ export const fetchProduct = async (id) => {
 export const saveProduct = async (productData) => {
   return await axios.post(API(), productData, {
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "multipart/form-data",
       "x-auth-token": user.getToken(),
     },
   });
