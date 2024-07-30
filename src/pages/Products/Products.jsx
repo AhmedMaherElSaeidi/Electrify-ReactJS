@@ -2,7 +2,7 @@ import "./Products.scss";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { fetchAllProducts } from "../../services/products";
-import SearchInput from "../../components/SearchInput/SearchInput";
+import SearchInput from "../../components/Form/SearchInput/SearchInput";
 import ProductCard from "../../components/Products/ProductCard/ProductCard";
 
 const Products = () => {
