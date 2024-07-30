@@ -70,6 +70,7 @@ const ProductUpdate = ({ handleEvent }) => {
     updateProduct(id, formData)
       .then(() => {
         // To refresh parent component
+        alert("Updated successfully.");
         handleEvent();
       })
       .catch((err) => {
@@ -82,7 +83,9 @@ const ProductUpdate = ({ handleEvent }) => {
   useEffect(() => {
     fetchProductData();
     fetchAllCategoriesData();
-  });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="product-update">
@@ -104,7 +107,7 @@ const ProductUpdate = ({ handleEvent }) => {
         />
         <FormInput2
           id="price"
-          step="0.001"
+          step="0.01"
           type="number"
           label="Price"
           register={register}
