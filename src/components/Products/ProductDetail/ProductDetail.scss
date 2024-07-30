@@ -3,7 +3,10 @@
     display: flex;
     flex-wrap: wrap;
     padding: 2%;
-
+    .remove-btn > svg:hover {
+      color: red;
+      cursor: pointer;
+    }
     img {
       width: 15rem;
       height: 15rem;

@@ -1,15 +1,17 @@
 import "./ProductDetail.scss";
-import { useParams } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
-import { fetchProduct } from "../../../services/products";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import RequestProduct from "../RequestProduct/RequestProduct";
+import { deleteProduct, fetchProduct } from "../../../services/products";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const user = new CurrentUser();
+  const navigate = useNavigate();
   const [pageData, setPageData] = useState({
     product: [],
     err: null,
@@ -29,6 +31,19 @@ const ProductDetail = () => {
         });
         console.error("Error fetching product:", err);
       });
+  };
+  const deleteProductData = async () => {
+    const confirm = prompt("If you wish to continue, type 'yes'...");
+    if (confirm === "yes") {
+      await deleteProduct(id)
+        .then(() => {
+          navigate("/products");
+          return;
+        })
+        .catch((err) => {
+          console.error("Error deleting product:", err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -66,6 +81,12 @@ const ProductDetail = () => {
                 {pageData.product.product_category &&
                   pageData.product.product_category.name}
               </li>
+              {user.isAdmin() && (
+                <li className="list-group-item remove-btn">
+                  <strong>Remove: </strong>
+                  <FaTrashAlt onClick={deleteProductData} />
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -73,7 +94,9 @@ const ProductDetail = () => {
       {user.sessionValid() && !user.isAdmin() && pageData.product && (
         <RequestProduct product={pageData.product} />
       )}
-      {user.isAdmin() && pageData.product && <ProductUpdate handleEvent={fetchProductData} />}
+      {user.isAdmin() && pageData.product && (
+        <ProductUpdate handleEvent={fetchProductData} />
+      )}
     </div>
   );
 };
