@@ -30,17 +30,19 @@ const ProductDetail = () => {
           return { ...prev, product };
         });
 
-        fetchSpecificCartItem(cart.cartID, product.id)
-          .then(() => {
-            setPageData((prev) => {
-              return { ...prev, inCart: true, loading: false };
+        if (cart.cartID) {
+          fetchSpecificCartItem(cart.cartID, product.id)
+            .then(() => {
+              setPageData((prev) => {
+                return { ...prev, inCart: true, loading: false };
+              });
+            })
+            .catch((err) => {
+              setPageData((prev) => {
+                return { ...prev, inCart: false, loading: false };
+              });
             });
-          })
-          .catch((err) => {
-            setPageData((prev) => {
-              return { ...prev, inCart: false, loading: false };
-            });
-          });
+        }
       })
       .catch((err) => {
         setPageData((prev) => {
@@ -109,7 +111,12 @@ const ProductDetail = () => {
       {user.sessionValid() &&
         !user.isAdmin() &&
         !pageData.inCart &&
-        pageData.product && <RequestProduct product={pageData.product} handleEvent={fetchProductData}/>}
+        pageData.product && (
+          <RequestProduct
+            product={pageData.product}
+            handleEvent={fetchProductData}
+          />
+        )}
       {user.isAdmin() && pageData.product && (
         <ProductUpdate handleEvent={fetchProductData} />
       )}
