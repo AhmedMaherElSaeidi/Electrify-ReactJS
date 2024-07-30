@@ -54,8 +54,8 @@ You can find the backend implementation [here](https://github.com/AhmedMaherElSa
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/ecommerce-app.git
-    cd ecommerce-app/frontend
+    git clone https://github.com/AhmedMaherElSaeidi/Electrify-ReactJS.git
+    cd Electrify-ReactJS
     ```
 
 2. **Install dependencies**:
