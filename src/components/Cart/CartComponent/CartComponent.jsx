@@ -24,15 +24,15 @@ const CartComponent = ({ cart, onClickEvent }) => {
 
     return { date: formattedDate, time: formattedTime };
   };
+  const deleteCart = () => {
+    onClickEvent(cart.id);
+  };
+  
   const { date, time } = formatISODateTime(cart.createdAt);
   const statusClass = {
     pending: "status-yellow",
     delivered: "status-green",
     canceled: "status-red",
-  };
-
-  const deleteCart = () => {
-    onClickEvent(cart.id);
   };
 
   return (
@@ -51,7 +51,12 @@ const CartComponent = ({ cart, onClickEvent }) => {
         <p className="mb-1">
           <span className="fw-bold">{date}</span> at {time}
         </p>
-        <a className="fs-5" href={cart.location} target="_blank" rel="noreferrer">
+        <a
+          className="fs-5"
+          href={cart.location}
+          target="_blank"
+          rel="noreferrer"
+        >
           <FaMapLocationDot />
         </a>
       </div>
