@@ -1,4 +1,4 @@
-$txt-color: #2c5f2d;
+$txt-color: white;
 
 .card {
   width: 15rem;
@@ -20,6 +20,7 @@ $txt-color: #2c5f2d;
     left: 0;
     opacity: 1;
     transition: opacity 0.2s ease-out;
+    filter: brightness(0.4);
   }
 
   h4 {
