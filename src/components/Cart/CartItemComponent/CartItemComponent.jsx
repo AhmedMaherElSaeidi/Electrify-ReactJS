@@ -8,7 +8,7 @@ const CartItemComponent = ({ item, removeItem }) => {
   const user = new CurrentUser();
   const quantity = item.quantity;
   const itemPrice = item.product_items.price;
-  const totalPrice = itemPrice * quantity;
+  const totalPrice = Number((itemPrice * quantity).toFixed(2));
 
   return (
     <div className="cart-item-component">
@@ -18,10 +18,13 @@ const CartItemComponent = ({ item, removeItem }) => {
         alt="product_image"
       />
       <span className="d-block">Quantity: {quantity}</span>
-      <span className="d-block">Price: ${itemPrice}</span>
-      <span className="d-block">Total: ${totalPrice}</span>
+      <span className="d-block">Price: EGP {itemPrice}</span>
+      <span className="d-block">Total: EGP {totalPrice}</span>
       {user.sessionValid() && !user.isAdmin() && (
-        <span className="d-block remove-btn" onClick={() => removeItem(item.id)}>
+        <span
+          className="d-block remove-btn"
+          onClick={() => removeItem(item.id)}
+        >
           Remove: <FaTrashAlt />
         </span>
       )}
