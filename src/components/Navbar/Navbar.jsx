@@ -1,7 +1,7 @@
 import "./Navbar.scss";
-import { TbPrompt } from "react-icons/tb";
 import { SiCodeblocks } from "react-icons/si";
 import { FaLinesLeaning } from "react-icons/fa6";
+import { BsSignpostSplit } from "react-icons/bs";
 import CurrentUser from "../../models/CurrentUser";
 import React, { useEffect, useState } from "react";
 import NavDropdown from "../NavDropdown/NavDropdown";
@@ -14,24 +14,7 @@ const Navbar = () => {
   const user = new CurrentUser();
   const [navbarData, setNavbarData] = useState({
     categories: [],
-    err: null,
-    loadig: true,
   });
-
-  useEffect(() => {
-    fetchAllCategories()
-      .then((res) => {
-        setNavbarData((prev) => {
-          return { ...prev, categories: res.data.data, loadig: false };
-        });
-      })
-      .catch((err) => {
-        setNavbarData((prev) => {
-          return { ...prev, err, loadig: false };
-        });
-        console.error("Error fetching categories:", err);
-      });
-  }, []);
 
   const activePath = (paths) => {
     return paths.some((path) => location.pathname === path);
@@ -67,6 +50,18 @@ const Navbar = () => {
       };
     }),
   ];
+
+  useEffect(() => {
+    fetchAllCategories()
+      .then((res) => {
+        setNavbarData((prev) => {
+          return { ...prev, categories: res.data.data };
+        });
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      });
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -129,7 +124,7 @@ const Navbar = () => {
                   }
                   to="/orders"
                 >
-                  <TbPrompt /> orders
+                  <BsSignpostSplit /> orders
                 </Link>
               </li>
             )}
