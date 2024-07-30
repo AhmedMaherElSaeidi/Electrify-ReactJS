@@ -7,7 +7,7 @@ import CurrentCart from "../../../models/CurrentCart";
 import FormInput3 from "../../Form/FormInput3/FormInput3";
 import { saveCartItem } from "../../../services/cartItems";
 
-const RequestProduct = ({ product }) => {
+const RequestProduct = ({ product, handleEvent }) => {
   const cart = new CurrentCart();
   const user = new CurrentUser();
   const {
@@ -48,6 +48,9 @@ const RequestProduct = ({ product }) => {
       await saveCartItem(cartItemData).catch((err) => {
         console.error("Error saving cart:", err);
       });
+
+      // Refreshing parent component
+      handleEvent();
 
       // Reseting form
       alert("Ordered successfully.");
