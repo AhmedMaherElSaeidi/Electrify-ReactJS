@@ -1,0 +1,13 @@
+.users-page {
+  .users-filter {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .users-wrapper {
+    padding: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

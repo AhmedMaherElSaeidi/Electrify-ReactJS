@@ -1,6 +1,6 @@
-import SERVER_DOMAIN from "../services/enviroment";
-import LocalStorage from "./LocalStorage";
 import { jwtDecode } from "jwt-decode";
+import LocalStorage from "./LocalStorage";
+import SERVER_DOMAIN from "../services/enviroment";
 
 class CurrentUser {
   token = null;
@@ -23,6 +23,26 @@ class CurrentUser {
     return this.user.item;
   }
 
+  get id() {
+    return this.toObject() ? this.toObject().id : null;
+  }
+
+  get name() {
+    return this.toObject() ? this.toObject().name : null;
+  }
+
+  get username() {
+    return this.toObject() ? this.toObject().username : null;
+  }
+
+  get telephone() {
+    return this.toObject() ? this.toObject().telephone : null;
+  }
+
+  get gender() {
+    return this.toObject() ? this.toObject().gender : null;
+  }
+
   profileIMG() {
     const user = this.user.item;
     return user
@@ -30,14 +50,13 @@ class CurrentUser {
       : require("../assets/images/default-avatar.jpg");
   }
 
+  isAdmin() {
+    return this.toObject() ? this.toObject().admin : false;
+  }
+
   getToken() {
     const token = this.token.item;
     return token ? token.token : null;
-  }
-
-  isAdmin() {
-    const user = this.user.item;
-    return user ? user.admin : false;
   }
 
   sessionValid() {
