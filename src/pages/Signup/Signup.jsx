@@ -1,12 +1,9 @@
 import "./Signup.scss";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-
 import { saveUser } from "../../services/users";
-import CurrentUser from "../../models/CurrentUser";
-
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import FormInput2 from "../../components/Form/FormInput2/FormInput2";
 import FormRadio2 from "../../components/Form/FormRadio2/FormRadio2";
@@ -14,7 +11,6 @@ import FormRadio2 from "../../components/Form/FormRadio2/FormRadio2";
 const Signup = () => {
   const [passwordV, setPasswordV] = useState(false);
   const navigate = useNavigate();
-  const user = new CurrentUser();
   const {
     register,
     handleSubmit,
@@ -33,12 +29,6 @@ const Signup = () => {
         console.error("Error registerring user:", err);
       });
   };
-
-  useEffect(() => {
-    if (user.sessionValid()) {
-      navigate("/home");
-    }
-  });
 
   return (
     <div className="signup">

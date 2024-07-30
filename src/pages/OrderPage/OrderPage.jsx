@@ -1,8 +1,8 @@
 import "./OrderPage.scss";
 import React, { useEffect, useState } from "react";
+import { updateProduct } from "../../services/products";
 import { fetchAllCarts, updateCart } from "../../services/carts";
 import OrderComponent from "../../components/Order/OrderComponent/OrderComponent";
-import { updateProduct } from "../../services/products";
 
 const OrderPage = () => {
   const [pageData, setPageData] = useState({

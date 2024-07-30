@@ -82,9 +82,7 @@ const ProductUpdate = ({ handleEvent }) => {
   useEffect(() => {
     fetchProductData();
     fetchAllCategoriesData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div className="product-update">

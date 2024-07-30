@@ -16,11 +16,6 @@ const Logout = () => {
   };
 
   useEffect(() => {
-    if (!user.sessionValid()) {
-      navigate("/home");
-      return;
-    }
-
     logout();
   });
 

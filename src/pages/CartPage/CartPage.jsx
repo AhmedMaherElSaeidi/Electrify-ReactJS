@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import CurrentUser from "../../models/CurrentUser";
 import { deleteCart, fetchUserCarts } from "../../services/carts";
@@ -8,7 +7,6 @@ import CurrentCart from "../../models/CurrentCart";
 const CartPage = () => {
   const user = new CurrentUser();
   const cart = new CurrentCart();
-  const navigate = useNavigate();
   const [pageData, setPageData] = useState({
     carts: [],
     err: null,
@@ -41,11 +39,6 @@ const CartPage = () => {
   };
 
   useEffect(() => {
-    if (!user.sessionValid() && !user.isAdmin()) {
-      navigate("/home");
-      return;
-    }
-
     fetchCartData();
   });
 

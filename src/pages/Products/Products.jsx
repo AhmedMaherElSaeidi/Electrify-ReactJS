@@ -14,6 +14,19 @@ const Products = () => {
     loadig: true,
   });
 
+  const handleFiltering = (event) => {
+    setPageData({ ...pageData, filter: event.target.value });
+  };
+  const filteredProducts = () => {
+    return pageData.products
+      .filter((product) => (id ? product.category_id === +id : true))
+      .filter((product) =>
+        pageData.filter
+          ? product.name.toLowerCase().includes(pageData.filter.toLowerCase())
+          : true
+      );
+  };
+
   useEffect(() => {
     fetchAllProducts()
       .then((res) => {
@@ -33,19 +46,6 @@ const Products = () => {
         console.error("Error fetching products:", err);
       });
   }, []);
-
-  const handleFiltering = (event) => {
-    setPageData({ ...pageData, filter: event.target.value });
-  };
-  const filteredProducts = () => {
-    return pageData.products
-      .filter((product) => (id ? product.category_id === +id : true))
-      .filter((product) =>
-        pageData.filter
-          ? product.name.toLowerCase().includes(pageData.filter.toLowerCase())
-          : true
-      );
-  };
 
   return (
     <div className="products-page mt-3 mb-3">

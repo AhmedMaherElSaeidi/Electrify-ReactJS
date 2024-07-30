@@ -11,6 +11,10 @@ import UsersPage from "./pages/UsersPage/UsersPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import ProductDetail from "./components/Products/ProductDetail/ProductDetail";
 import ProductCreate from "./components/Products/ProductCreate/ProductCreate";
+import AuthGuard from "./guards/AuthGuard";
+import GuestGuard from "./guards/GuestGuard";
+import AdminGuard from "./guards/AdminGuard";
+import CustomerGuard from "./guards/CustomerGuard";
 
 const router = createHashRouter([
   {
@@ -18,20 +22,77 @@ const router = createHashRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "/cart", element: <CartPage /> },
       { path: "/home", element: <Home /> },
-      { path: "/orders", element: <OrderPage /> },
+      {
+        path: "/cart",
+        element: (
+          <CustomerGuard>
+            <CartPage />
+          </CustomerGuard>
+        ),
+      },
+      {
+        path: "/orders",
+        element: (
+          <AdminGuard>
+            <OrderPage />
+          </AdminGuard>
+        ),
+      },
       { path: "/products", element: <Products /> },
-      { path: "/settings", element: <SettingsPage /> },
+      {
+        path: "/settings",
+        element: (
+          <AuthGuard>
+            <SettingsPage />
+          </AuthGuard>
+        ),
+      },
       { path: "/products/:id", element: <Products /> },
       { path: "/product/:id", element: <ProductDetail /> },
-      { path: "/create_product", element: <ProductCreate /> },
-      { path: "/list_users", element: <UsersPage /> },
+      {
+        path: "/create_product",
+        element: (
+          <AdminGuard>
+            <ProductCreate />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "/list_users",
+        element: (
+          <AdminGuard>
+            <UsersPage />
+          </AdminGuard>
+        ),
+      },
     ],
   },
-  { path: "/login", element: <Login /> },
-  { path: "/logout", element: <Logout /> },
-  { path: "/register", element: <Signup /> },
+
+  {
+    path: "/login",
+    element: (
+      <GuestGuard>
+        <Login />
+      </GuestGuard>
+    ),
+  },
+  {
+    path: "/logout",
+    element: (
+      <AuthGuard>
+        <Logout />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <GuestGuard>
+        <Signup />
+      </GuestGuard>
+    ),
+  },
   { path: "*", element: <h1>404 Not Found</h1> },
 ]);
 

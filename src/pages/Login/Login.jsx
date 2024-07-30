@@ -1,8 +1,8 @@
 import "./Login.scss";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 
 import CurrentUser from "../../models/CurrentUser";
 import { login } from "../../services/authentication";
@@ -23,7 +23,6 @@ const Login = () => {
     login(data)
       .then((res) => {
         // saving user credentials
-        const user = new CurrentUser();
         user.authenticate(res.data.data);
 
         // Go to home if authorized
@@ -36,12 +35,6 @@ const Login = () => {
         console.error("Error logging user:", err);
       });
   };
-
-  useEffect(() => {
-    if (user.sessionValid()) {
-      navigate("/home");
-    }
-  });
 
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>
