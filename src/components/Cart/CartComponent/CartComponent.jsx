@@ -30,7 +30,7 @@ const CartComponent = ({ cart, onClickEvent, handleEvent }) => {
       return cumm + curr.quantity * curr.product_items.price;
     }, 0);
 
-    return total;
+    return Number(total.toFixed(2));
   };
   const removeItem = async (id) => {
     await deleteCartItem(id)

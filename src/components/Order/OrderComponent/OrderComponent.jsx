@@ -26,7 +26,7 @@ const OrderComponent = ({ order, updateCartStatus }) => {
       return cumm + curr.quantity * curr.product_items.price;
     }, 0);
 
-    return total;
+    return Number(total.toFixed(2));
   };
   const onSubmit = (data) => {
     data.id = order.id;
