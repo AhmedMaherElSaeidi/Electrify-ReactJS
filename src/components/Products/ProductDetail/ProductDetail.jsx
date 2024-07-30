@@ -67,7 +67,9 @@ const ProductDetail = () => {
 
   useEffect(() => {
     fetchProductData();
-  });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="product-details">
