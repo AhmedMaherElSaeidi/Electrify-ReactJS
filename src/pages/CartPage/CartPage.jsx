@@ -101,7 +101,6 @@ const CartPage = () => {
     setPageData({ ...pageData, cartItems: [], location: null, loading: false });
     alert("Request Submitted");
   };
-  console.log(pageData);
 
   return (
     <div className="cart-page">
