@@ -4,7 +4,7 @@
     font-weight: 500;
   }
   .invalid-input {
-    outline: 2px solid red;
+    outline: 1px solid red;
   }
   #input-1:checked ~ .category label .span-1,
   #input-2:checked ~ .category label .span-2 {
