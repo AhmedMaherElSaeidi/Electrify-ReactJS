@@ -76,6 +76,7 @@ const OrderPage = () => {
 
   useEffect(() => {
     fetchAllOrdersData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
