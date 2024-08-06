@@ -99,7 +99,7 @@ const CartPage = () => {
 
     cart.clearSession();
     setPageData({ ...pageData, cartItems: [], location: null, loading: false });
-    alert("Request Submitted");
+    navigate("/cart-history");
   };
 
   return (

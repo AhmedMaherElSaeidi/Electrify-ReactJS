@@ -9,6 +9,7 @@ import OrderPage from "./pages/OrderPage/OrderPage";
 import { createHashRouter } from "react-router-dom";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import CartHistoryPage from "./pages/CartHistoryPage/CartHistoryPage";
 import ProductDetail from "./components/Products/ProductDetail/ProductDetail";
 import ProductCreate from "./components/Products/ProductCreate/ProductCreate";
 import AuthGuard from "./guards/AuthGuard";
@@ -28,6 +29,14 @@ const router = createHashRouter([
         element: (
           <CustomerGuard>
             <CartPage />
+          </CustomerGuard>
+        ),
+      },
+      {
+        path: "/cart-history",
+        element: (
+          <CustomerGuard>
+            <CartHistoryPage />
           </CustomerGuard>
         ),
       },

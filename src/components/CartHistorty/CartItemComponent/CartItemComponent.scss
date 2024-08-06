@@ -1,0 +1,11 @@
+.cart-history-item {
+  > .item-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    > img {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}

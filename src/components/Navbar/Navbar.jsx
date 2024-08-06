@@ -1,13 +1,13 @@
 import "./Navbar.scss";
 import NavDropdown from "./NavDropdown";
 import { SiCodeblocks } from "react-icons/si";
-import { FaLinesLeaning } from "react-icons/fa6";
 import { BsSignpostSplit } from "react-icons/bs";
 import CurrentUser from "../../models/CurrentUser";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaShoppingCart, FaHome } from "react-icons/fa";
 import { fetchAllCategories } from "../../services/categories";
+import { FaLinesLeaning, FaCartArrowDown } from "react-icons/fa6";
 
 const Navbar = () => {
   const location = useLocation();
@@ -113,6 +113,18 @@ const Navbar = () => {
                   to="/cart"
                 >
                   <FaShoppingCart /> cart
+                </Link>
+              </li>
+            )}
+            {!user.isAdmin() && user.sessionValid() && (
+              <li className="nav-item">
+                <Link
+                  className={
+                    activePath(["/cart-history"]) ? "nav-link active" : "nav-link"
+                  }
+                  to="/cart-history"
+                >
+                  <FaCartArrowDown /> History
                 </Link>
               </li>
             )}
