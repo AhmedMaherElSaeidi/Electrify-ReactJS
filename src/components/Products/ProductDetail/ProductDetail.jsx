@@ -103,6 +103,7 @@ const ProductDetail = () => {
               </li>
               {user.sessionValid() &&
                 !user.isAdmin() &&
+                pageData.product.stock > 0 &&
                 !cart.productExists(pageData.product.id) && (
                   <li className="list-group-item">
                     <span className="btn btn-dark" onClick={addToCart}>
