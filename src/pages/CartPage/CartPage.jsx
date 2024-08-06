@@ -53,19 +53,21 @@ const CartPage = () => {
     cart.location = url;
     setPageData({ ...pageData, location: url, loading: false });
   };
-  const splice = (str, word) => {
-    const index = str.indexOf(word);
-    if (index === -1) {
-      return str;
-    }
+  const calculateTotal = () => {
+    const total = pageData.cartItems.reduce(
+      (cumm, curr) => cumm + curr.totalPrice,
+      0
+    );
 
-    const spliceIndex = index + word.length;
-    const splicedString = str.slice(0, spliceIndex);
-    return splicedString;
+    return Number(total.toFixed(2));
   };
   const onSubmit = async () => {
     if (!user.sessionValid()) {
       navigate("/home");
+    }
+    if (!pageData.location) {
+      alert("Please set your checkout location.");
+      return;
     }
 
     setPageData({ ...pageData, loading: true });
@@ -101,9 +103,22 @@ const CartPage = () => {
     setPageData({ ...pageData, cartItems: [], location: null, loading: false });
     navigate("/cart-history");
   };
+  const splice = (str, word) => {
+    const index = str.indexOf(word);
+    if (index === -1) {
+      return str;
+    }
+
+    const spliceIndex = index + word.length;
+    const splicedString = str.slice(0, spliceIndex);
+    return splicedString;
+  };
 
   return (
     <div className="cart-page">
+      <div className="alert alert-warning text-center">
+        In case map didn't show up refresh the page.
+      </div>
       <div className="cart">
         <div className="cart-header">
           <h3 className="fw-bold">Shopping Cart</h3>
@@ -128,12 +143,7 @@ const CartPage = () => {
             <p className="mb-1">items {cart.products.length}</p>
             <p className="mb-1">
               Total Price:
-              <span className="fw-normal">
-                {` ${pageData.cartItems.reduce(
-                  (cumm, curr) => cumm + curr.totalPrice,
-                  0
-                )} EGP`}
-              </span>
+              <span className="fw-normal">{` ${calculateTotal()} EGP`}</span>
             </p>
           </div>
           <div className="mb-3">
