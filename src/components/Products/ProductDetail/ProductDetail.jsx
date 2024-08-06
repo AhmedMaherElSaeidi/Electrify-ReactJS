@@ -6,8 +6,6 @@ import CurrentUser from "../../../models/CurrentUser";
 import SERVER_DOMAIN from "../../../services/enviroment";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
-import RequestProduct from "../RequestProduct/RequestProduct";
-import { fetchSpecificCartItem } from "../../../services/cartItems";
 import { deleteProduct, fetchProduct } from "../../../services/products";
 
 const ProductDetail = () => {
@@ -18,7 +16,6 @@ const ProductDetail = () => {
   const [pageData, setPageData] = useState({
     product: [],
     err: null,
-    inCart: false,
     loading: true,
   });
 
@@ -27,22 +24,8 @@ const ProductDetail = () => {
       .then((res) => {
         const product = res.data.data;
         setPageData((prev) => {
-          return { ...prev, product };
+          return { ...prev, product, loading: false };
         });
-
-        if (cart.cartID) {
-          fetchSpecificCartItem(cart.cartID, product.id)
-            .then(() => {
-              setPageData((prev) => {
-                return { ...prev, inCart: true, loading: false };
-              });
-            })
-            .catch((err) => {
-              setPageData((prev) => {
-                return { ...prev, inCart: false, loading: false };
-              });
-            });
-        }
       })
       .catch((err) => {
         setPageData((prev) => {
@@ -63,6 +46,11 @@ const ProductDetail = () => {
           console.error("Error deleting product:", err);
         });
     }
+  };
+  const addToCart = () => {
+    setPageData({ ...pageData, loading: true });
+    cart.addProduct(pageData.product.id, 1);
+    setPageData({ ...pageData, loading: false });
   };
 
   useEffect(() => {
@@ -100,6 +88,28 @@ const ProductDetail = () => {
                 {pageData.product.product_category &&
                   pageData.product.product_category.name}
               </li>
+              <li className="list-group-item">
+                {pageData.product.stock > 0 && (
+                  <span className="badge bg-success me-1">In-Stock</span>
+                )}
+                {pageData.product.stock === 0 && (
+                  <span className="badge bg-danger me-1">Out-of-Stock</span>
+                )}
+                {cart.productExists(pageData.product.id) && (
+                  <span className="badge bg-warning text-dark me-1">
+                    In-Cart
+                  </span>
+                )}
+              </li>
+              {user.sessionValid() &&
+                !user.isAdmin() &&
+                !cart.productExists(pageData.product.id) && (
+                  <li className="list-group-item">
+                    <span className="btn btn-secondary" onClick={addToCart}>
+                      Add-to-Cart
+                    </span>
+                  </li>
+                )}
               {user.isAdmin() && (
                 <li className="list-group-item remove-btn">
                   <strong>Remove: </strong>
@@ -110,15 +120,6 @@ const ProductDetail = () => {
           </div>
         </div>
       )}
-      {user.sessionValid() &&
-        !user.isAdmin() &&
-        !pageData.inCart &&
-        pageData.product && (
-          <RequestProduct
-            product={pageData.product}
-            handleEvent={fetchProductData}
-          />
-        )}
       {user.isAdmin() && pageData.product && (
         <ProductUpdate handleEvent={fetchProductData} />
       )}

@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-light mt-2 p-4 text-center">
+    <footer className="bg-light mt-2 p-2 text-center">
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -12,7 +12,7 @@ const Footer = () => {
               src={require("../../assets/images/electrify-logo.png")}
               alt="website_logo"
             />
-            <p className="fw-bold">
+            <p className="fw-bold small">
               &copy; {new Date().getFullYear()} Electrify. All Rights Reserved.
             </p>
           </div>

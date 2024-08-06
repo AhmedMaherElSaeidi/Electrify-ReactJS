@@ -1,0 +1,25 @@
+.cart-page {
+  padding: 3%;
+  > .cart {
+    padding: 3%;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    background-color: whitesmoke;
+    > .cart-header {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  > .cart-summary {
+    padding: 3%;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: whitesmoke;
+    .submit-container {
+      text-align: center;
+      .submit-btn {
+        border-radius: 0.15rem;
+      }
+    }
+  }
+}
