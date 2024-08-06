@@ -2,19 +2,9 @@
 
 ## Overview
 
-This is the frontend for the e-commerce application. It provides a user interface to interact with the backend services, allowing users to browse products, manage their cart, and place orders. The frontend is built with React.js, Sass, Bootstrap, and utilizes React Hooks and JWT for authentication.
+This is the front end of the e-commerce application. It provides a user interface to interact with the backend services, allowing users to browse products, manage their cart, and place orders. The frontend is built with React.js, Sass, and Bootstrap, and utilizes React Hooks and JWT for authentication.
 
 You can find the backend implementation [here](https://github.com/AhmedMaherElSaeidi/Electrify-NodeJS).
-
-## Tech Stack
-
-- **React.js**: JavaScript library for building user interfaces.
-- **Sass**: CSS preprocessor for advanced styling and theming.
-- **Bootstrap**: CSS framework for responsive and mobile-first design.
-- **React Hooks**: For managing state and lifecycle in functional components.
-- **react-router-dom**: For handling routing and navigation within the application.
-- **use-form-hook**: For managing and validating form inputs.
-- **guards.jsx**: For protecting routes and managing access control based on user authentication.
 
 ## Features
 
@@ -22,11 +12,11 @@ You can find the backend implementation [here](https://github.com/AhmedMaherElSa
 - **Product Browsing**: View and filter products with a responsive layout.
 - **Product Details**: Detailed view of product information including images, description, and price.
 - **Cart Management**: Add products to the cart, view cart contents, and adjust quantities.
-- **Order Placement**: Specify delivery location and place orders with an intuitive checkout process.
+- **Order Placement**: Specify the delivery location and place orders using an intuitive checkout process.
 
 ### Authentication
 - **Login**: Users can log in using their credentials and receive a JWT for secure access.
-- **Registration**: New users can register an account with necessary details.
+- **Registration**: New users can register an account with the necessary details.
 - **Profile Management**: Users can update their profile information and view their order history.
 
 ### Routing
