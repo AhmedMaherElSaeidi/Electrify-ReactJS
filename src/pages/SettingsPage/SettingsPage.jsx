@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import CurrentUser from "../../models/CurrentUser";
 import React, { useEffect, useState } from "react";
 import SERVER_DOMAIN from "../../services/enviroment";
+import Spinner from "../../components/Spinner/Spinner";
 import FormInput2 from "../../components/Form/FormInput2/FormInput2";
 import FormSelect2 from "../../components/Form/FormSelect2/FormSelect2";
 import { deleteUser, fetchUser, updateUser } from "../../services/users";
-import Spinner from "../../components/Spinner/Spinner";
 
 const SettingsPage = () => {
   const user = new CurrentUser();
@@ -97,6 +97,9 @@ const SettingsPage = () => {
 
   return (
     <div className="settings-page">
+      <div className="alert alert-warning text-center mb-3" role="alert">
+        Some changes may need time to appear.
+      </div>
       {!pageData.loading && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
