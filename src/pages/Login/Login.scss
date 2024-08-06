@@ -16,8 +16,8 @@
   -moz-transition: -moz-transform 300ms, box-shadow 300ms;
   transition: transform 300ms, box-shadow 300ms;
   box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
-  ::before,
-  ::after {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
     width: 600px;
@@ -28,7 +28,7 @@
     border-bottom-right-radius: 40%;
     z-index: -1;
   }
-  ::before {
+  &::before {
     left: 40%;
     bottom: -130%;
     background-color: #97bc62;
@@ -36,7 +36,7 @@
     -moz-animation: wawes 6s infinite linear;
     animation: wawes 6s infinite linear;
   }
-  ::after {
+  &::after {
     left: 35%;
     bottom: -125%;
     background-color: #2c5f2daa;
@@ -77,6 +77,16 @@
   }
   > button:hover {
     background-color: #2c5f2de7;
+  }
+  > .login-icon {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 1.2rem;
+    &:hover {
+      color: #97bc62;
+      cursor: pointer;
+    }
   }
 }
 

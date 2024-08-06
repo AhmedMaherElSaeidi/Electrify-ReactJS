@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
 import CurrentUser from "../../models/CurrentUser";
 import { login } from "../../services/authentication";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import FormInput1 from "../../components/Form/FormInput1/FormInput1";
 
 const Login = () => {
@@ -32,12 +31,18 @@ const Login = () => {
         }
       })
       .catch((err) => {
+        const res = err.response;
+        if (res && res.data && res.data.message)
+          alert(err.response.data.message);
         console.error("Error logging user:", err);
       });
   };
 
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>
+      <span className="login-icon" onClick={() => navigate("/home")}>
+        <FaHome />
+      </span>
       <FormInput1
         type="text"
         id="username"
