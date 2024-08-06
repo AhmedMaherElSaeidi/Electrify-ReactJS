@@ -26,6 +26,8 @@ const Signup = () => {
         }
       })
       .catch((err) => {
+        const res = err.response;
+        if (res && res.data && res.data.message) alert(res.data.message);
         console.error("Error registerring user:", err);
       });
   };
