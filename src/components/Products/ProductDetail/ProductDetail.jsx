@@ -105,7 +105,7 @@ const ProductDetail = () => {
                 !user.isAdmin() &&
                 !cart.productExists(pageData.product.id) && (
                   <li className="list-group-item">
-                    <span className="btn btn-secondary" onClick={addToCart}>
+                    <span className="btn btn-dark" onClick={addToCart}>
                       Add-to-Cart
                     </span>
                   </li>
