@@ -34,10 +34,17 @@ const CartHistoryPage = () => {
 
   useEffect(() => {
     fetchUserCartsData();
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
+      {pageData.carts.length === 0 && (
+        <div className="alert alert-warning text-center">
+          You don't have purchase history at the moment.
+        </div>
+      )}
       {pageData.carts &&
         pageData.carts.map((cart, index) => {
           return (
