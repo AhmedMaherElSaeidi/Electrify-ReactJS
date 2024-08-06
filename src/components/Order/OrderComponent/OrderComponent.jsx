@@ -41,10 +41,10 @@ const OrderComponent = ({ order, updateCartStatus }) => {
     (status) => status === order.status
   );
   const user = order.user_cart;
-  const statusClass = {
-    delivered: "status-green",
-    pending: "status-yellow",
-    canceled: "status-red",
+  const badgeClass = {
+    delivered: "bg-success",
+    pending: "bg-warning",
+    canceled: "bg-danger",
   };
 
   return (
@@ -99,7 +99,9 @@ const OrderComponent = ({ order, updateCartStatus }) => {
           <span className="fw-bold">Total: </span>
           EGP{calculateTotal()}
         </p>
-        <span className={statusClass[order.status]}>{order.status}</span>
+        <span className={`badge ${badgeClass[order.status]}`}>
+          {order.status}
+        </span>
       </div>
     </div>
   );

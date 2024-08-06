@@ -37,23 +37,5 @@ $border-color: #2c5f2d;
     margin-top: 1rem;
     padding-top: 0.5rem;
     border-top: 1px solid $border-color;
-    .status-yellow,
-    .status-green,
-    .status-red {
-      padding: 0.25rem;
-      border-radius: 0.25rem;
-    }
-    .status-yellow {
-      color: yellow;
-      background-color: #525207;
-    }
-    .status-green {
-      color: greenyellow;
-      background-color: #3b5711;
-    }
-    .status-red {
-      color: red;
-      background-color: #520e0e;
-    }
   }
 }

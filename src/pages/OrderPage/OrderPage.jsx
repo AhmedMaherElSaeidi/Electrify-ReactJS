@@ -2,6 +2,7 @@ import "./OrderPage.scss";
 import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner/Spinner";
 import { updateProduct } from "../../services/products";
+import { FaSortAlphaUp, FaSortAlphaDown } from "react-icons/fa";
 import { fetchAllCarts, updateCart } from "../../services/carts";
 import OrderComponent from "../../components/Order/OrderComponent/OrderComponent";
 
@@ -9,10 +10,12 @@ const OrderPage = () => {
   const [pageData, setPageData] = useState({
     orders: [],
     err: null,
-    loading: true,
+    loading: false,
+    orderAlpha: "asc",
   });
 
-  const fetchAllCartsData = async () => {
+  const fetchAllOrdersData = async () => {
+    setPageData({ ...pageData, loading: true });
     await fetchAllCarts()
       .then((res) => {
         setPageData((prev) => {
@@ -26,7 +29,7 @@ const OrderPage = () => {
         console.log(err);
       });
   };
-  const updateCartData = async (cartData, productsData) => {
+  const updateOrderData = async (cartData, productsData) => {
     setPageData({ ...pageData, loading: true });
     const cartID = cartData.id;
     delete cartData.id;
@@ -56,22 +59,43 @@ const OrderPage = () => {
 
     // Refreshing page
     setPageData({ ...pageData, loading: false });
-    fetchAllCartsData();
+    fetchAllOrdersData();
+  };
+  const sortOrderData = () => {
+    setPageData((prev) => {
+      const nextSort = pageData.orderAlpha === "asc" ? "desc" : "asc";
+      const orders = pageData.orders.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return nextSort === "asc" ? dateA - dateB : dateB - dateA;
+      });
+
+      return { ...prev, orders, orderAlpha: nextSort };
+    });
   };
 
   useEffect(() => {
-    fetchAllCartsData();
+    fetchAllOrdersData();
   }, []);
 
   return (
-    <div>
+    <div className="orders-page">
+      <div className="alert alert-light mb-4 p-2">
+        <span className="sort-btn me-3" onClick={sortOrderData}>
+          {pageData.orderAlpha === "asc" ? (
+            <FaSortAlphaUp />
+          ) : (
+            <FaSortAlphaDown />
+          )}
+        </span>
+      </div>
       {pageData.orders &&
         pageData.orders.map((order, index) => {
           return (
             <OrderComponent
               key={index}
               order={order}
-              updateCartStatus={updateCartData}
+              updateCartStatus={updateOrderData}
             />
           );
         })}

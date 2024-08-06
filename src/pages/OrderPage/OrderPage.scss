@@ -1,0 +1,20 @@
+.orders-page {
+  .sort-btn {
+    font-size: 1.2rem;
+    &:hover {
+      cursor: pointer;
+      color: #97bc62;
+    }
+  }
+  .status-btn {
+    > span {
+      &:hover {
+        opacity: 0.9 !important;
+        cursor: pointer;
+      }
+    }
+    > span.selected {
+      opacity: 0.5;
+    }
+  }
+}
