@@ -41,9 +41,8 @@ const CartPage = () => {
     setPageData({
       ...pageData,
       cartItems: pageData.cartItems.filter((item) => item.id !== id),
+      loading: false,
     });
-
-    setPageData({ ...pageData, loading: false });
   };
   const clearLocationSelect = () => {
     setPageData({ ...pageData, location: null });
@@ -102,6 +101,7 @@ const CartPage = () => {
     setPageData({ ...pageData, cartItems: [], location: null, loading: false });
     alert("Request Submitted");
   };
+  console.log(pageData);
 
   return (
     <div className="cart-page">
