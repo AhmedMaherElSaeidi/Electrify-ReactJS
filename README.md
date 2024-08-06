@@ -75,5 +75,6 @@ You can find the backend implementation [here](https://github.com/AhmedMaherElSa
 Ensure you have the following environment variables set in your `.env` file:
 
 ```plaintext
-REACT_APP_API_URL=http://localhost:5000/api
-REACT_APP_JWT_SECRET=your_jwt_secret
+REACT_APP_SERVER_DOMAIN="http://localhost:3600"
+REACT_APP_GOOGLE_MAP_KEY="AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao"
+
